@@ -1,0 +1,56 @@
+<div class="weather-container">
+  <h1 class="title">🌤️ Météo EIT ISEP Dakar/Thiès</h1>
+  
+  <div class="search-section">
+    <input 
+      type="text" 
+      [(ngModel)]="cityName" 
+      (keyup.enter)="getWeather()"
+      placeholder="Dakar, Thiès, Paris..."
+      class="city-input">
+    <button (click)="getWeather()" class="search-btn">
+      🔍 Rechercher
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading">⏳ Chargement...</div>
+
+  <div *ngIf="weatherData && !error" class="weather-card">
+    <div class="current-weather">
+      <img [src]="'https://openweathermap.org/img/wn/' + weatherData.weather[0].icon + '@4x.png'" 
+           [alt]="weatherData.weather[0].description" class="weather-icon">
+      <div class="temp-container">
+        <h2 class="temp">{{weatherTemp}}°C</h2>
+        <p class="feels">Ressenti: {{feelsTemp}}°C</p>
+      </div>
+    </div>
+    
+    <div class="weather-details">
+      <h3>{{weatherData.name}}, {{weatherData.sys.country}}</h3>
+      <p class="description">{{weatherData.weather[0].description | titlecase}}</p>
+      
+      <div class="stats-grid">
+        <div class="stat">
+          <span class="stat-label">💧 Humidité</span>
+          <span class="stat-value">{{weatherData.main.humidity}}%</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">💨 Vent</span>
+          <span class="stat-value">{{weatherData.wind.speed}} m/s</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">🌡️ Pression</span>
+          <span class="stat-value">{{weatherData.main.pressure}} hPa</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="error">
+    ❌ Ville non trouvée: {{cityName}}
+  </div>
+
+  <footer class="footer">
+    Ibrahima Tall - EIT ISEP Thiès - Angular Weather 2/8 🚀
+  </footer>
+</div>
